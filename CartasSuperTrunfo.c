@@ -18,7 +18,7 @@ int main() {
   char nome_da_cidade_carta1[20], nome_da_cidade_carta2[20];
 
   // Número de habitantes da cidade da Carta 1 e Carta 2, respectivamente.
-  int populacao_carta1, populacao_carta2;
+  unsigned long int populacao_carta1, populacao_carta2;
 
   // Área da cidade em km² da cidade da Carta 1 e Carta 2, respectivamente.
   float area_em_km2_carta1, area_em_km2_carta2;
@@ -34,6 +34,20 @@ int main() {
 
   // PIP per capito da Carta 1 e Carta 2, respectivamente.
   float pib_per_capita_carta1, pib_per_capita_carta2;
+
+  // Super Poder para a Carta 1 e Carta 2, respectivamente.
+  float superPoder_carta1, superPoder_carta2;
+
+
+  // === Declarando as variáveis para comparação de poder
+
+  int resultadoPopulacao;
+  int resultadoArea;
+  int resultadoPIB;
+  int resultadoPontosTuristicos;
+  int resultadoDensidadePopulacional;
+  int resultadoPibPerCapita;
+  int resultadoSuperPoder;
 
 
   printf("=== Desafio Super Trunfo - Países=== \n");
@@ -52,7 +66,7 @@ int main() {
   scanf("%s", nome_da_cidade_carta1); //Inserindo valor à variável referente ao Nome da cidade da Carta 1
 
   printf("Digite qual a populacao da cidade: ");
-  scanf("%d", &populacao_carta1); // Inserindo valor à variável referente a População da Carta 1
+  scanf("%lu", &populacao_carta1); // Inserindo valor à variável referente a População da Carta 1
 
   printf("Digite a Área da cidade (em km²): ");
   scanf("%f", &area_em_km2_carta1); // Inserindo valor à variável referente a Área da Carta 1
@@ -78,7 +92,7 @@ int main() {
   scanf("%s", nome_da_cidade_carta2); //Inserindo valor à variável referente ao Nome da cidade da Carta 2
 
   printf("Digite qual a população da cidade: ");
-  scanf("%d", &populacao_carta2); // Inserindo valor à variável referente a População da Carta 2
+  scanf("%lu", &populacao_carta2); // Inserindo valor à variável referente a População da Carta 2
 
   printf("Digite a Área da cidade (em km²): ");
   scanf("%f", &area_em_km2_carta2); // Inserindo valor à variável referente a Área da Carta 2
@@ -90,19 +104,47 @@ int main() {
   printf("Digite o número de pontos turísticos que a Cidade possui: ");
   scanf("%d", &numero_pontos_turisticos_carta2); // Inserindo valor à variável referente ao Número de pontos turísticos da Carta 2
 
+  //  === Cálculos para Carta 1 ===
 
   // Cálculo da densidade populacional da Carta 1
   densidade_populacional_carta1 = (float) populacao_carta1 / area_em_km2_carta1;
 
+  // Inversão do valor da densidade populacional da Carta 1, para comparar poder
+  float densidadeInvertida_carta1 = 1 / densidade_populacional_carta1;
+
   // Cálculo do Pip per Capita da Carta 1
   pib_per_capita_carta1 =  pib_carta1 / (float) populacao_carta1;
+
+  // Cálculo Super Poder Carta 1
+
+  superPoder_carta1 = (float)populacao_carta1 + area_em_km2_carta1 + pib_carta1 + densidadeInvertida_carta1 + pib_per_capita_carta1 + (float)numero_pontos_turisticos_carta1; 
   
+
+  
+  //  === Cálculos para Carta 2 ===
   
   // Cálculo da densidade populacional da Carta 2
   densidade_populacional_carta2 = (float) populacao_carta2 / area_em_km2_carta2;
 
+  // Inversão do valor da densidade populacional da Carta 2, para comparar poder
+  float densidadeInvertida_carta2 = 1 / densidade_populacional_carta2;
+
+
   // Cálculo do Pip per Capita da Carta 2
   pib_per_capita_carta2 =  pib_carta2 / (float) populacao_carta2;
+
+  // Cálculo Super Poder Carta 2
+  superPoder_carta2 = (float)populacao_carta2 + area_em_km2_carta2 + pib_carta2 + densidadeInvertida_carta2 + pib_per_capita_carta2 + (float)numero_pontos_turisticos_carta2;
+
+
+  // Comparação dos valores de cada habilidade de poder
+  resultadoPopulacao = populacao_carta1 > populacao_carta2;
+  resultadoArea = area_em_km2_carta1 > area_em_km2_carta2;
+  resultadoPIB = pib_carta1 > pib_carta2;
+  resultadoPontosTuristicos = numero_pontos_turisticos_carta1 > numero_pontos_turisticos_carta2;
+  resultadoDensidadePopulacional = densidadeInvertida_carta2 < densidadeInvertida_carta1;
+  resultadoPibPerCapita = pib_per_capita_carta1 > pib_per_capita_carta2;
+  resultadoSuperPoder = superPoder_carta1 > superPoder_carta2;
   
   
   // === Impressão dos dados da carta 1 ===
@@ -111,12 +153,14 @@ int main() {
   printf("Estado: %c \n", estado_carta1); //Estado
   printf("Código: %s \n", codigo_da_carta1); //Código
   printf("Nome da Cidade: %s \n", nome_da_cidade_carta1); //Nome
-  printf("População: %d habitantes \n", populacao_carta1); //Populção
+  printf("População: %lu habitantes \n", populacao_carta1); //População
   printf("Área: %.2f km² \n", area_em_km2_carta1); //Área
   printf("PIB: %.2f bilhões de reais \n", pib_carta1 / 1000000000.0); // PIB - Conversão necessária para voltar ao formato originalmente inserido
   printf("Número de Pontos Turísticos: %d \n", numero_pontos_turisticos_carta1); //Número de Pontos turísticos
   printf("Densidade Populacional: %.2f hab/km² \n", densidade_populacional_carta1); // Densidade Populacional
   printf("PIB per Capita: %.2f reais \n", pib_per_capita_carta1); // PIB per Capita
+  printf("Super Poder: %.f  \n", superPoder_carta1); // Super Poder
+  
 
    // === Impressão dos dados da carta 2 ===
   printf("\n Carta 2: \n");
@@ -124,14 +168,26 @@ int main() {
   printf("Estado: %c \n", estado_carta2); //Estado
   printf("Código: %s \n", codigo_da_carta2); //Código
   printf("Nome da Cidade: %s \n", nome_da_cidade_carta2); //Nome
-  printf("População: %d habitantes \n", populacao_carta2); //Populção
+  printf("População: %lu habitantes \n", populacao_carta2); //População
   printf("Área: %.2f km² \n", area_em_km2_carta2); //Área
   printf("PIB: %.2f bilhões de reais \n", pib_carta2 / 1000000000.0); // PIB - Conversão necessária para voltar ao formato originalmente inserido
   printf("Número de Pontos Turísticos: %d \n", numero_pontos_turisticos_carta2); //Número de Pontos turísticos
   printf("Densidade Populacional: %.2f hab/km² \n", densidade_populacional_carta2); // Densidade Populacional
   printf("PIB per Capita: %.2f reais \n", pib_per_capita_carta2); // PIB per Capita
+  printf("Super Poder: %.f  \n", superPoder_carta2); // Super Poder
+  
 
 
+// === Impressão de Comparação dos poderes das cartas
+printf("\n=== Comparação das Cartas ===\n");
+
+printf("População: Carta 1 venceu? %d \n", resultadoPopulacao); // resultado de população
+printf("Área: Carta 1 venceu? %d \n", resultadoArea); // resultado de area
+printf("PIB: Carta 1 venceu? %d \n", resultadoPIB);  // resultado de PIB
+printf("Pontos Turísticos: Carta 1 venceu? %d \n", resultadoPontosTuristicos); // resultado de pontos turísticos
+printf("Densidade Populacional: Carta 2 venceu? %d \n", resultadoDensidadePopulacional); // resultado de densidade populacional
+printf("PIB per Capita: Carta 1 venceu? %d \n", resultadoPibPerCapita); // resultado de PIP per Capita
+printf("Super Poder: Carta 1 venceu? %d \n", resultadoSuperPoder);  // resultado de super poder
 
 
 
